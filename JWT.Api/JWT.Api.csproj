@@ -25,4 +25,8 @@
     <ProjectReference Include="..\JWT.Infrastructure\JWT.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ResponseModels\" />
+  </ItemGroup>
+
 </Project>
