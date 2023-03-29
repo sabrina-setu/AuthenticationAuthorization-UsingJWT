@@ -33,4 +33,13 @@ public class AuthController : ControllerBase
         if (result.Succeeded) return Ok(token);
         return BadRequest();
     }
+    [HttpPost("SignIn")]
+    public async Task<IActionResult> SignIn(SignInRequestModel signInRequest)
+    {
+        var user = await userManager.FindByEmailAsync(signInRequest.Email);
+        if (user == null || !await userManager.CheckPasswordAsync(user, signInRequest.Password)) 
+            return BadRequest("Email or Password is not correct!");
+        var token = tokenGenerator.GenerateToken(user);
+        return Ok(token);
+    }
 }
