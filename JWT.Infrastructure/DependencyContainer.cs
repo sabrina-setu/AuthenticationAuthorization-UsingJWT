@@ -19,6 +19,7 @@ public static class DependencyContainer
             opt.SignIn.RequireConfirmedPhoneNumber = false;
             opt.SignIn.RequireConfirmedAccount = false;
             opt.User.RequireUniqueEmail = true;
+            opt.SignIn.RequireConfirmedEmail = true;
 
             opt.Password.RequiredUniqueChars = 0;
             opt.Password.RequireNonAlphanumeric = false;
@@ -37,5 +38,6 @@ public static class DependencyContainer
         b => b.MigrationsAssembly(typeof(ApplicationDBContext).Assembly.FullName)), ServiceLifetime.Scoped);
 
         services.AddScoped<ITokenGenerator, TokenGeneratorService>();
+        services.AddScoped<IEmailService, EmailService>();
     }
 }

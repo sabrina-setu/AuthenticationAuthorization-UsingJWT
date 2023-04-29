@@ -45,7 +45,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Djigui Api v1",
+        Title = "JWT Api v1",
         Version = "v1"
     });
 });
