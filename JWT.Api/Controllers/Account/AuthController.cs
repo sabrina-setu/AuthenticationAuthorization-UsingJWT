@@ -41,7 +41,7 @@ public class AuthController : ControllerBase
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             var confirmationLink = Url.Action("ConfirmEmail", "Email", new { token, email = user.Email }, Request.Scheme);
-            var isMailSent = await emailService.SendEmailAsync(signUpRequest.Email, "Reset Password", $"<a href='{confirmationLink}'>Please click this link to reset password.</a>");
+            var isMailSent = await emailService.SendEmailAsync(signUpRequest.Email, "Confirm Email", $"<a href='{confirmationLink}'>Please click this link to confirm email.</a>");
 
             return isMailSent ? Ok("Please check you email inbox, an email is sent.") : Ok("Can't send email.");
 
