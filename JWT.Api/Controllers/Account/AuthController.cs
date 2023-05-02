@@ -40,7 +40,8 @@ public class AuthController : ControllerBase
             token = $"{signUpRequest.Email}/{token}";
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
-            var confirmationLink = Url.Action("ConfirmEmail", "Email", new { token, email = user.Email }, Request.Scheme);
+           // var confirmationLink = nameof(ConfirmEmail) + "confirmEmail?token=" + token;
+           var confirmationLink = "https://localhost:7175/swagger/index.html";
             var isMailSent = await emailService.SendEmailAsync(signUpRequest.Email, "Confirm Email", $"<a href='{confirmationLink}'>Please click this link to confirm email.</a>");
 
             return isMailSent ? Ok("Please check you email inbox, an email is sent.") : Ok("Can't send email.");
@@ -50,11 +51,21 @@ public class AuthController : ControllerBase
 
        return BadRequest();
     }
+    [HttpGet]
+    public async Task<IActionResult> ConfirmEmail(string token, string email)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+        if (user == null)
+            return BadRequest("Error");
+
+        var result = await userManager.ConfirmEmailAsync(user, token);
+        return Ok(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+    }
     [HttpPost("SignIn")]
     public async Task<IActionResult> SignIn(SignInRequestModel signInRequest)
     {
         var user = await userManager.FindByEmailAsync(signInRequest.Email);
-        if (user == null || !await userManager.CheckPasswordAsync(user, signInRequest.Password)) 
+        if (user == null || !await userManager.CheckPasswordAsync(user, signInRequest.Password) || user.EmailConfirmed != true) 
             return BadRequest("Email or Password is not correct!");
         var token = tokenGenerator.GenerateToken(user);
         return Ok(token);

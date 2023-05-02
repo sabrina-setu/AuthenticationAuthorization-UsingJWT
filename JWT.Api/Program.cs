@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var appSettings = builder.Configuration.GetSection("AuthConfigs").Get<AuthConfigs>();
 builder.Services.Configure<AuthConfigs>(builder.Configuration.GetSection("AuthConfigs"));
+builder.Services.Configure<EmailServerSetup>(builder.Configuration.GetSection("EmailServerSetup"));
 
 builder.Services.AddAuthenticationDependencies();
 builder.Services.AddAuthentication(opt =>

@@ -15,7 +15,7 @@ public static class DependencyContainer
     {
         services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
         {
-            opt.SignIn.RequireConfirmedEmail = false;
+            //opt.SignIn.RequireConfirmedEmail = false;
             opt.SignIn.RequireConfirmedPhoneNumber = false;
             opt.SignIn.RequireConfirmedAccount = false;
             opt.User.RequireUniqueEmail = true;
